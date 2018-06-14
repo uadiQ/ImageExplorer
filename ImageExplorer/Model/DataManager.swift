@@ -36,7 +36,6 @@ final class DataManager {
             switch result {
             case .success(let jsonValue):
                 guard let jsonArray = jsonValue.array else {print("Error at transition into array"); return }
-                print("received jsonArray")
                 var fetchedPosts: [Post] = []
                 for object in jsonArray {
                     guard let post = Post(json: object) else { continue }
@@ -51,7 +50,6 @@ final class DataManager {
     }
     
     func addToFavourites(post: Post) {
-        
         var newPost = Post(id: post.id,
                            urls: post.urls,
                            links: post.links,
@@ -60,15 +58,12 @@ final class DataManager {
         if let imageUrl = URL(string: newPost.urls.full) {
             newPost.saveMealImage(by: imageUrl)
         }
-        
         favourites.append(newPost)
         CoreDataManager.instance.addPostToFavorites(newPost)
     }
     
     func deleteFromFavourites(post: Post) {
         guard let deletingIndex = favourites.index(of: post) else {print("No such meal at favourites"); return }
-        let postID = post.id
-        
         favourites.remove(at: deletingIndex)
         CoreDataManager.instance.deletePostFromFavorites(post)
     }

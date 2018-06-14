@@ -10,13 +10,6 @@ import Foundation
 import Alamofire
 import SwiftyJSON
 
-enum NetworkError: Error {
-    case urlCreation
-    case authorization
-    case noData
-}
-
-
 final class NetworkManager {
     static let instance = NetworkManager()
     
@@ -26,7 +19,6 @@ final class NetworkManager {
         Alamofire.request(Constants.Networking.photos, headers: Constants.Networking.headers).responseJSON { response in
             switch response.result {
             case .success(let value):
-                print("Successfull request")
                 let jsonResponse = JSON(value)
                 completionHandler(.success(jsonResponse))
                 

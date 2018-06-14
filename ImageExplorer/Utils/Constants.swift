@@ -10,7 +10,6 @@ import UIKit
 import Alamofire
 
 enum Constants {
-    static let appID = "28916"
     static let accessKey = "331cf76d030f45bdc36b3bf7de0dc0c789f7458076cc705648c8a9520681832e"
     static var authorizationHeaderValue: String {
         return "Client-ID " + Constants.accessKey
