@@ -19,7 +19,8 @@ class BrowseViewController: UIViewController {
         setupTableView()
         DataManager.instance.fetchRecentPhotos()
         HUD.show(.progress, onView: view)
-        
+        title = "Explore"
+        navigationController?.navigationBar.tintColor = .black
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -78,26 +79,17 @@ extension BrowseViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        //return UITableViewAutomaticDimension
-        //return 300
-        
         return PostTableViewCell.height
     }
     
-//    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-//        return 350
-//    }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: PostTableViewCell.reuseID, for: indexPath) as? PostTableViewCell else {
             fatalError("Cell with wrong id")
         }
-        
-        let mealToPresent = recentPosts[indexPath.row]
-        // guard let thumbnailUrl = URL(string: mealToPresent.urls.thumb) else { fatalError("Error @ creating url for thumb") }
-        guard let smallImageUrl = URL(string: mealToPresent.urls.small) else { fatalError("Error @ creating url for thumb") }
-        cell.update(with: smallImageUrl)
-        
+        let postToPresent = recentPosts[indexPath.row]
+        cell.update(with: postToPresent)
+        cell.delegate = self
         return cell
     }
     
@@ -106,4 +98,15 @@ extension BrowseViewController: UITableViewDelegate, UITableViewDataSource {
         performSegue(withIdentifier: Constants.showDetails, sender: mealToPresent)
     }
 }
+
+extension BrowseViewController: PostSharing {
+    func share(urlToShare: URL) {
+        let activityViewController = UIActivityViewController(activityItems: [urlToShare], applicationActivities: nil)
+        activityViewController.popoverPresentationController?.sourceView = tableView
+        self.present(activityViewController, animated: true, completion: nil)
+        
+    }
+}
+
+
 

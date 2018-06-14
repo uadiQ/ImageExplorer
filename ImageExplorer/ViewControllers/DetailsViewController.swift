@@ -19,13 +19,12 @@ class DetailsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        
     }
     
     func setupUI() {
         guard let regularUrl = URL(string: post.urls.regular) else {  print( "wrong url");return }
         photoImage.sd_setImage(with: regularUrl)
-        authorName.text = post.user.name
+        authorName.text = "Author: \(post.user.name)"
     }
     
     @IBAction func seeProfilePushed(_ sender: Any) {

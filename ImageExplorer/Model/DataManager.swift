@@ -12,9 +12,13 @@ final class DataManager {
     static let instance = DataManager()
     private let networkManager = NetworkManager.instance
     
-    private init() {}
+    private init() { }
     
-    var favourites: [Post] = []
+    var favourites: [Post] = [] {
+        didSet {
+            NotificationCenter.default.post(name: .FavouritesChanged, object: nil)
+        }
+    }
     var recents: [Post] = [] {
         didSet {
             NotificationCenter.default.post(name: .RecentsUpdated, object: nil)
@@ -38,5 +42,9 @@ final class DataManager {
                 print(error)
             }
         }
+    }
+    
+    func addToFavourites(post: Post) {
+        favourites.append(post)
     }
 }

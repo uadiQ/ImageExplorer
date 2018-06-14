@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1C5E877420D2BEEE009E666D /* ImageExplorer.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1C5E877220D2BEEE009E666D /* ImageExplorer.xcdatamodeld */; };
+		1C5E877F20D2C1B0009E666D /* PostMO+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C5E877D20D2C1B0009E666D /* PostMO+CoreDataClass.swift */; };
+		1C5E878020D2C1B0009E666D /* PostMO+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C5E877E20D2C1B0009E666D /* PostMO+CoreDataProperties.swift */; };
 		1C70812620D27854005F4F4F /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C70812520D27854005F4F4F /* Result.swift */; };
 		1C70812920D27B25005F4F4F /* PostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C70812720D27B25005F4F4F /* PostTableViewCell.swift */; };
 		1C70812A20D27B25005F4F4F /* PostTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C70812820D27B25005F4F4F /* PostTableViewCell.xib */; };
@@ -28,6 +31,9 @@
 
 /* Begin PBXFileReference section */
 		145B040C6F31F87814363920 /* Pods_ImageExplorer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ImageExplorer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1C5E877320D2BEEE009E666D /* ImageExplorer.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ImageExplorer.xcdatamodel; sourceTree = "<group>"; };
+		1C5E877D20D2C1B0009E666D /* PostMO+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PostMO+CoreDataClass.swift"; sourceTree = "<group>"; };
+		1C5E877E20D2C1B0009E666D /* PostMO+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PostMO+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		1C70812520D27854005F4F4F /* Result.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
 		1C70812720D27B25005F4F4F /* PostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTableViewCell.swift; sourceTree = "<group>"; };
 		1C70812820D27B25005F4F4F /* PostTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PostTableViewCell.xib; sourceTree = "<group>"; };
@@ -68,6 +74,17 @@
 				145B040C6F31F87814363920 /* Pods_ImageExplorer.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		1C5E877120D2BEC6009E666D /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				1C5E877D20D2C1B0009E666D /* PostMO+CoreDataClass.swift */,
+				1C5E877E20D2C1B0009E666D /* PostMO+CoreDataProperties.swift */,
+				1CC7B64B20D2708200B74011 /* CoreDataManager.swift */,
+				1C5E877220D2BEEE009E666D /* ImageExplorer.xcdatamodeld */,
+			);
+			path = CoreData;
 			sourceTree = "<group>";
 		};
 		1CC7B61E20D2651200B74011 = {
@@ -136,8 +153,8 @@
 		1CC7B64820D2706A00B74011 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				1C5E877120D2BEC6009E666D /* CoreData */,
 				1CC7B64920D2707900B74011 /* NetworkManager.swift */,
-				1CC7B64B20D2708200B74011 /* CoreDataManager.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -283,13 +300,16 @@
 				1C70812620D27854005F4F4F /* Result.swift in Sources */,
 				1C70812C20D28007005F4F4F /* Post.swift in Sources */,
 				1C70812E20D286F2005F4F4F /* Notification+Extension.swift in Sources */,
+				1C5E877420D2BEEE009E666D /* ImageExplorer.xcdatamodeld in Sources */,
 				1CC7B64A20D2707900B74011 /* NetworkManager.swift in Sources */,
+				1C5E878020D2C1B0009E666D /* PostMO+CoreDataProperties.swift in Sources */,
 				1CC7B64320D26DB900B74011 /* BookmarksViewController.swift in Sources */,
 				1CC7B64720D2705900B74011 /* DataManager.swift in Sources */,
 				1CC7B64120D26D9300B74011 /* BrowseViewController.swift in Sources */,
 				1CC7B62B20D2651200B74011 /* AppDelegate.swift in Sources */,
 				1CC7B64C20D2708200B74011 /* CoreDataManager.swift in Sources */,
 				1C70812920D27B25005F4F4F /* PostTableViewCell.swift in Sources */,
+				1C5E877F20D2C1B0009E666D /* PostMO+CoreDataClass.swift in Sources */,
 				1CC7B64520D26E0100B74011 /* DetailsViewController.swift in Sources */,
 				1CC7B64F20D2712800B74011 /* Constants.swift in Sources */,
 			);
@@ -491,6 +511,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		1C5E877220D2BEEE009E666D /* ImageExplorer.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				1C5E877320D2BEEE009E666D /* ImageExplorer.xcdatamodel */,
+			);
+			currentVersion = 1C5E877320D2BEEE009E666D /* ImageExplorer.xcdatamodel */;
+			path = ImageExplorer.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 1CC7B61F20D2651200B74011 /* Project object */;
 }

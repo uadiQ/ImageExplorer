@@ -11,4 +11,5 @@ import Foundation
 extension Notification.Name {
     static let RecentsUpdated = Notification.Name("RecentsUpdated")
     static let ImageLoaded = Notification.Name("ImageLoaded")
+    static let FavouritesChanged = Notification.Name("FavouritesChanged")
 }

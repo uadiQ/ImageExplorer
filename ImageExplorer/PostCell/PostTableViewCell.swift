@@ -8,13 +8,22 @@
 
 import UIKit
 import SDWebImage
+import PKHUD
+
+protocol PostSharing: class {
+    func share(urlToShare: URL)
+}
 
 class PostTableViewCell: UITableViewCell {
     static let reuseID = String(describing: PostTableViewCell.self)
     static let nib = UINib(nibName: String(describing: PostTableViewCell.self), bundle: nil)
     
+    @IBOutlet weak var likeButton: UIButton!
     @IBOutlet private weak var cardView: UIView!
     @IBOutlet weak var photoImage: UIImageView!
+    
+    private var post: Post!
+    weak var delegate: PostSharing?
     
     enum CardShadow {
         static let color = UIColor.gray.cgColor
@@ -36,7 +45,30 @@ class PostTableViewCell: UITableViewCell {
         cardView.layer.shadowOpacity = CardShadow.opacity
     }
     
-    func update(with imageURL: URL) {
-        photoImage.sd_setImage(with: imageURL)
+    func update(with post: Post) {
+        self.post = post
+        guard let imageUrl = URL(string: post.urls.regular) else { return }
+        photoImage.sd_setImage(with: imageUrl)
+        likeButton.isEnabled = !isFavourite(post: post)
+    }
+    
+    func isFavourite(post: Post) -> Bool {
+        for item in DataManager.instance.favourites {
+            if item == post {
+            return true
+            }
+        }
+        return false
+    }
+    
+    @IBAction func shareButtonPushed(_ sender: UIButton) {
+        guard let urlToShare = URL(string: post.links.html) else { return }
+        delegate?.share(urlToShare: urlToShare)
+    }
+    
+    @IBAction func likeButtonPushed(_ sender: UIButton) {
+       HUD.flash(.labeledSuccess(title: "Meal added to Favorites!", subtitle: nil), delay: 0.5)
+       DataManager.instance.addToFavourites(post: post)
+        likeButton.isEnabled = !isFavourite(post: post)
     }
 }

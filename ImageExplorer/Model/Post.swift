@@ -12,12 +12,6 @@ import SwiftyJSON
 struct Urls: Codable {
     let full: String
     let regular: String
-    let small: String
-    let thumb: String
-    
-//    init?(from json: [String: Any]) {
-//        guard let full = json["full"], let regular = json["regular"], let small = json["small"], let thumb = json["small"]
-//    }
 }
 
 struct User: Codable {
@@ -27,7 +21,6 @@ struct User: Codable {
 
 struct Links: Codable {
     let html: String
-    let download: String
 }
 
 struct Post: Codable {
@@ -36,11 +29,12 @@ struct Post: Codable {
     let links: Links
     let user: User
     
-//    init?(from json: JSON) {
-//        guard let id = json["id"].string else { print ("error @ getting id"); return nil }
-//        guard let user = json["user"].dictionaryObject, let userName = user["name"] else { print ("error @ getting username"); return nil }
-//    }
-    
+    //let regularPhotoImage: UIImage? = nil
 }
 
+extension Post: Equatable {
+    static func == (lhs: Post, rhs: Post) -> Bool {
+        return lhs.id == rhs.id
+    }
+}
 
