@@ -13,6 +13,7 @@ class BookmarksViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        DataManager.instance.loadFavourites()
         setupTableView()
         title = "Favourites"
         

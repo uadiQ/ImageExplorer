@@ -25,6 +25,14 @@ final class DataManager {
         }
     }
     
+    func loadFavourites() {
+        if !CoreDataManager.instance.isFavoritesEmpty {
+            CoreDataManager.instance.fetchFavorites {[unowned self] fetchedFavorites in
+                self.favourites = fetchedFavorites
+            }
+        }
+    }
+    
     func fetchRecentPhotos() {
         networkManager.fetchRecentPhotos { [weak self] result in
             switch result {
@@ -46,5 +54,12 @@ final class DataManager {
     
     func addToFavourites(post: Post) {
         favourites.append(post)
+        CoreDataManager.instance.addPostToFavorites(post)
+    }
+    
+    func deleteFromFavourites(post: Post) {
+        guard let deletingIndex = favourites.index(of: post) else {print("No such meal at favourites"); return }
+        favourites.remove(at: deletingIndex)
+        CoreDataManager.instance.deletePostFromFavorites(post)
     }
 }

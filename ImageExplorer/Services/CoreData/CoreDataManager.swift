@@ -13,17 +13,16 @@ final class CoreDataManager {
     static let instance = CoreDataManager()
     private init() {}
     
-    /*
-    
+
     var isFavoritesEmpty: Bool {
-        let request: NSFetchRequest = MealMO.fetchRequest()
-        guard let categoriesCount = try? persistentContainer.viewContext.count(for: request) else { return false }
-        return !(categoriesCount > 0)
+        let request: NSFetchRequest = PostMO.fetchRequest()
+        guard let postsCount = try? persistentContainer.viewContext.count(for: request) else { return false }
+        return !(postsCount > 0)
     }
     
-    func fetchFavorites(completionHandler: @escaping ([Meal]) -> Void) {
+    func fetchFavorites(completionHandler: @escaping ([Post]) -> Void) {
         persistentContainer.performBackgroundTask { bgContext in
-            let request: NSFetchRequest = MealMO.fetchRequest()
+            let request: NSFetchRequest = PostMO.fetchRequest()
             let fetchedResult = (try? bgContext.fetch(request)) ?? []
             let result = fetchedResult.map {
                 $0.convertedPlainObject()
@@ -32,20 +31,20 @@ final class CoreDataManager {
         }
     }
     
-    func addMealToFavorites(_ meal: Meal) {
+    func addPostToFavorites(_ post: Post) {
         persistentContainer.performBackgroundTask { bgContext in
-            let mealMO = MealMO(context: bgContext)
-            mealMO.setup(from: meal)
+            let postMO = PostMO(context: bgContext)
+            postMO.setup(from: post)
             try? bgContext.save()
         }
     }
     
-    func refreshFavorites(_ favorites: [Meal]) {
+    func refreshFavorites(_ favorites: [Post]) {
         deleteAllData()
         persistentContainer.performBackgroundTask { bgContext in
             favorites.forEach {
-                let mealMO = MealMO(context: bgContext)
-                mealMO.setup(from: $0)
+                let postMO = PostMO(context: bgContext)
+                postMO.setup(from: $0)
             }
             try? bgContext.save()
         }
@@ -53,17 +52,17 @@ final class CoreDataManager {
     
     func deleteAllData() {
         persistentContainer.performBackgroundTask { bgContext in
-            let deleteRequest = NSBatchDeleteRequest(fetchRequest: MealMO.fetchRequest())
+            let deleteRequest = NSBatchDeleteRequest(fetchRequest: PostMO.fetchRequest())
             _ = try? bgContext.execute(deleteRequest)
             try? bgContext.save()
         }
     }
     
-    func deleteMealFromFavorites(_ meal: Meal) {
-        guard let deletionId = meal.id else { return }
+    func deletePostFromFavorites(_ post: Post) {
+        let deletionId = post.id
         persistentContainer.performBackgroundTask { bgContext in
             
-            let request: NSFetchRequest<MealMO> = MealMO.fetchRequest()
+            let request: NSFetchRequest<PostMO> = PostMO.fetchRequest()
             let idPredicate = NSPredicate(format: "id = %d", deletionId)
             request.predicate = idPredicate
             if let result = try? bgContext.fetch(request) {
@@ -74,8 +73,7 @@ final class CoreDataManager {
             try? bgContext.save()
         }
     }
- 
- */
+
     
     // MARK: - Core Data stack
     private lazy var persistentContainer: NSPersistentContainer = {
