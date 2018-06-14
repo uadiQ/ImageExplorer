@@ -25,6 +25,7 @@ class BrowseViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        tableView.reloadData() // To setup favourite button correctly every time, after favourite is deleted
         setObservers()
     }
     
@@ -107,6 +108,3 @@ extension BrowseViewController: PostSharing {
         
     }
 }
-
-
-

@@ -63,9 +63,11 @@ final class CoreDataManager {
         persistentContainer.performBackgroundTask { bgContext in
             
             let request: NSFetchRequest<PostMO> = PostMO.fetchRequest()
-            let idPredicate = NSPredicate(format: "id = %d", deletionId)
+            let idPredicate = NSPredicate(format: "id = %@", deletionId)
+            
             request.predicate = idPredicate
             if let result = try? bgContext.fetch(request) {
+                print(result)
                 for object in result {
                     bgContext.delete(object)
                 }

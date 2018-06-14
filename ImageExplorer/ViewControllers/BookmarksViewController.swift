@@ -19,16 +19,9 @@ class BookmarksViewController: UIViewController {
         
     }
     
-    var favourites: [Post] = [] {
-        didSet {
-            tableView.reloadData()
-        }
-    }
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        favourites = DataManager.instance.favourites
-        NotificationCenter.default.addObserver(self, selector: #selector(processFavouritesChanged), name: .FavouritesChanged, object: nil)
+        tableView.reloadData()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -48,17 +41,12 @@ class BookmarksViewController: UIViewController {
         destVC.post = sender as? Post
     }
 }
-// MARK: - Notifications
-extension BookmarksViewController {
-    @objc func processFavouritesChanged() {
-        self.favourites = DataManager.instance.favourites
-    }
-}
+
 
 // MARK: - TableViewDelegate, TableViewDataSource
 extension BookmarksViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return favourites.count
+        return DataManager.instance.favourites.count
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -70,7 +58,7 @@ extension BookmarksViewController: UITableViewDelegate, UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: PostTableViewCell.reuseID, for: indexPath) as? PostTableViewCell else {
             fatalError("Cell with wrong id")
         }
-        let postToPresent = favourites[indexPath.row]
+        let postToPresent = DataManager.instance.favourites[indexPath.row]
         cell.update(with: postToPresent)
         return cell
     }
@@ -78,5 +66,14 @@ extension BookmarksViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let mealToPresent = DataManager.instance.favourites[indexPath.row]
         performSegue(withIdentifier: Constants.showDetails, sender: mealToPresent)
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        
+        guard editingStyle == .delete else { return }
+        let deletingItem = DataManager.instance.favourites[indexPath.row]
+        DataManager.instance.deleteFromFavourites(post: deletingItem)
+        
+        tableView.deleteRows(at: [indexPath], with: .fade)
     }
 }

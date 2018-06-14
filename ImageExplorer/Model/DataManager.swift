@@ -14,11 +14,8 @@ final class DataManager {
     
     private init() { }
     
-    var favourites: [Post] = [] {
-        didSet {
-            NotificationCenter.default.post(name: .FavouritesChanged, object: nil)
-        }
-    }
+    var favourites: [Post] = []
+
     var recents: [Post] = [] {
         didSet {
             NotificationCenter.default.post(name: .RecentsUpdated, object: nil)
