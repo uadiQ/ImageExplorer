@@ -15,15 +15,21 @@ class DetailsViewController: UIViewController {
     @IBOutlet private weak var authorName: UILabel!
     
     var post: Post!
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
     }
     
     func setupUI() {
-        guard let regularUrl = URL(string: post.urls.regular) else {  print( "wrong url");return }
-        photoImage.sd_setImage(with: regularUrl)
+        if let image = post.fullPhotoImage {
+            photoImage.image = image
+        } else {
+            guard let regularUrl = URL(string: post.urls.regular) else { print( "wrong url")
+                return
+            }
+            photoImage.sd_setImage(with: regularUrl)
+        }
         authorName.text = "Author: \(post.user.name)"
     }
     

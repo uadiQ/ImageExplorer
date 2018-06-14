@@ -18,9 +18,9 @@ class PostTableViewCell: UITableViewCell {
     static let reuseID = String(describing: PostTableViewCell.self)
     static let nib = UINib(nibName: String(describing: PostTableViewCell.self), bundle: nil)
     
-    @IBOutlet weak var likeButton: UIButton!
+    @IBOutlet private weak var likeButton: UIButton!
     @IBOutlet private weak var cardView: UIView!
-    @IBOutlet weak var photoImage: UIImageView!
+    @IBOutlet private weak var photoImage: UIImageView!
     
     private var post: Post!
     weak var delegate: PostSharing?
@@ -47,15 +47,19 @@ class PostTableViewCell: UITableViewCell {
     
     func update(with post: Post) {
         self.post = post
-        guard let imageUrl = URL(string: post.urls.regular) else { return }
-        photoImage.sd_setImage(with: imageUrl)
+        if let image = post.fullPhotoImage {
+            photoImage.image = image
+        } else {
+            guard let imageUrl = URL(string: post.urls.regular) else { return }
+            photoImage.sd_setImage(with: imageUrl)
+        }
         likeButton.isEnabled = !isFavourite(post: post)
     }
     
     func isFavourite(post: Post) -> Bool {
         for item in DataManager.instance.favourites {
             if item == post {
-            return true
+                return true
             }
         }
         return false
@@ -67,8 +71,8 @@ class PostTableViewCell: UITableViewCell {
     }
     
     @IBAction func likeButtonPushed(_ sender: UIButton) {
-       HUD.flash(.labeledSuccess(title: "Meal added to Favorites!", subtitle: nil), delay: 0.5)
-       DataManager.instance.addToFavourites(post: post)
+        HUD.flash(.labeledSuccess(title: "Meal added to Favorites!", subtitle: nil), delay: 0.5)
+        DataManager.instance.addToFavourites(post: post)
         likeButton.isEnabled = !isFavourite(post: post)
     }
 }

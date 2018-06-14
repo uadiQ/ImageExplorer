@@ -55,7 +55,6 @@ class BrowseViewController: UIViewController {
         destVC.post = sender as? Post
     }
     
-    
 }
 
 // MARK: - Notification
@@ -105,6 +104,5 @@ extension BrowseViewController: PostSharing {
         let activityViewController = UIActivityViewController(activityItems: [urlToShare], applicationActivities: nil)
         activityViewController.popoverPresentationController?.sourceView = tableView
         self.present(activityViewController, animated: true, completion: nil)
-        
     }
 }

@@ -13,7 +13,6 @@ class BookmarksViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        DataManager.instance.loadFavourites()
         setupTableView()
         title = "Favourites"
         
@@ -60,6 +59,7 @@ extension BookmarksViewController: UITableViewDelegate, UITableViewDataSource {
         }
         let postToPresent = DataManager.instance.favourites[indexPath.row]
         cell.update(with: postToPresent)
+        cell.delegate = self
         return cell
     }
     
@@ -75,5 +75,13 @@ extension BookmarksViewController: UITableViewDelegate, UITableViewDataSource {
         DataManager.instance.deleteFromFavourites(post: deletingItem)
         
         tableView.deleteRows(at: [indexPath], with: .fade)
+    }
+}
+
+extension BookmarksViewController: PostSharing {
+    func share(urlToShare: URL) {
+        let activityViewController = UIActivityViewController(activityItems: [urlToShare], applicationActivities: nil)
+        activityViewController.popoverPresentationController?.sourceView = tableView
+        self.present(activityViewController, animated: true, completion: nil)
     }
 }

@@ -2,7 +2,7 @@
 //  PostMO+CoreDataProperties.swift
 //  ImageExplorer
 //
-//  Created by Vadim Shoshin on 14.06.2018.
+//  Created by Vadim Shoshin on 15.06.2018.
 //  Copyright © 2018 Vadim Shoshin. All rights reserved.
 //
 //
@@ -23,5 +23,6 @@ extension PostMO {
     @NSManaged public var fullName: String?
     @NSManaged public var username: String?
     @NSManaged public var htmlLink: String?
+    @NSManaged public var fullPhotoImage: NSData?
 
 }

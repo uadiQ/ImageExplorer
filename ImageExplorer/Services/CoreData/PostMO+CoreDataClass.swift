@@ -2,12 +2,12 @@
 //  PostMO+CoreDataClass.swift
 //  ImageExplorer
 //
-//  Created by Vadim Shoshin on 14.06.2018.
+//  Created by Vadim Shoshin on 15.06.2018.
 //  Copyright © 2018 Vadim Shoshin. All rights reserved.
 //
 //
 
-import Foundation
+import UIKit
 import CoreData
 
 
@@ -17,7 +17,9 @@ public class PostMO: NSManagedObject {
         let urls = Urls(full: self.fullImageUrl ?? "", regular: self.regularImageUrl ?? "")
         let links = Links(html: self.htmlLink ?? "")
         
-        return Post(id: self.id ?? "", urls: urls, links: links, user: user)
+        var plainPost = Post(id: self.id ?? "", urls: urls, links: links, user: user)
+        plainPost.addImage(from: self.fullPhotoImage)
+        return plainPost
     }
     
     func setup(from post: Post) {
@@ -27,5 +29,9 @@ public class PostMO: NSManagedObject {
         fullName = post.user.name
         username = post.user.username
         htmlLink = post.links.html
+        if let image = post.fullPhotoImage {
+            guard let imageData = UIImagePNGRepresentation(image) else { return }
+            self.fullPhotoImage = NSData(data: imageData)
+        }
     }
 }

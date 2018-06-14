@@ -22,12 +22,13 @@ final class NetworkManager {
     
     private init() { }
     
-    func fetchRecentPhotos(completionHandler: @escaping (Result<Data>) -> Void) {
-        Alamofire.request(Constants.Networking.photos, headers: Constants.Networking.headers).responseData { (response) in
+    func fetchRecentPhotos(completionHandler: @escaping (Result<JSON>) -> Void) {
+        Alamofire.request(Constants.Networking.photos, headers: Constants.Networking.headers).responseJSON { response in
             switch response.result {
             case .success(let value):
                 print("Successfull request")
-                completionHandler(.success(value))
+                let jsonResponse = JSON(value)
+                completionHandler(.success(jsonResponse))
                 
             case .failure(let error):
                 print("failedRequest")
@@ -35,6 +36,7 @@ final class NetworkManager {
                 
             }
         }
-     
     }
+    
 }
+

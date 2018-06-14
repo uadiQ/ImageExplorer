@@ -7,15 +7,16 @@
 //
 
 import Foundation
+import SDWebImage
 
 final class DataManager {
     static let instance = DataManager()
     private let networkManager = NetworkManager.instance
     
-    private init() { }
+    private init() { self.loadFavourites() }
     
     var favourites: [Post] = []
-
+    
     var recents: [Post] = [] {
         didSet {
             NotificationCenter.default.post(name: .RecentsUpdated, object: nil)
@@ -33,15 +34,15 @@ final class DataManager {
     func fetchRecentPhotos() {
         networkManager.fetchRecentPhotos { [weak self] result in
             switch result {
-            case .success(let data):
+            case .success(let jsonValue):
+                guard let jsonArray = jsonValue.array else {print("Error at transition into array"); return }
                 print("received jsonArray")
-                do {
-                    let decoder = JSONDecoder()
-                    let recentsPosts = try decoder.decode([Post].self, from: data)
-                    self?.recents = recentsPosts
-                } catch let error {
-                    print("Failed at parsing posts- " + error.localizedDescription)
+                var fetchedPosts: [Post] = []
+                for object in jsonArray {
+                    guard let post = Post(json: object) else { continue }
+                    fetchedPosts.append(post)
                 }
+                self?.recents = fetchedPosts
                 
             case .fail(let error):
                 print(error)
@@ -50,12 +51,24 @@ final class DataManager {
     }
     
     func addToFavourites(post: Post) {
-        favourites.append(post)
-        CoreDataManager.instance.addPostToFavorites(post)
+        
+        var newPost = Post(id: post.id,
+                           urls: post.urls,
+                           links: post.links,
+                           user: post.user)
+        
+        if let imageUrl = URL(string: newPost.urls.full) {
+            newPost.saveMealImage(by: imageUrl)
+        }
+        
+        favourites.append(newPost)
+        CoreDataManager.instance.addPostToFavorites(newPost)
     }
     
     func deleteFromFavourites(post: Post) {
         guard let deletingIndex = favourites.index(of: post) else {print("No such meal at favourites"); return }
+        let postID = post.id
+        
         favourites.remove(at: deletingIndex)
         CoreDataManager.instance.deletePostFromFavorites(post)
     }
