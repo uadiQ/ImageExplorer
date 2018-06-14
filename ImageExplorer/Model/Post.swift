@@ -9,17 +9,17 @@
 import UIKit
 import SwiftyJSON
 
-struct Urls: Codable {
+struct Urls {
     let full: String
     let regular: String
 }
 
-struct User: Codable {
+struct User {
     let name: String
     let username: String
 }
 
-struct Links: Codable {
+struct Links {
     let html: String
 }
 
