@@ -44,6 +44,7 @@ final class DataManager {
                 self?.recents = fetchedPosts
                 
             case .fail(let error):
+                NotificationCenter.default.post(name: .RequestFailed, object: nil)
                 print(error)
             }
         }

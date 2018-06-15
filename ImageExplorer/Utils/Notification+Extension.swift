@@ -12,4 +12,5 @@ extension Notification.Name {
     static let RecentsUpdated = Notification.Name("RecentsUpdated")
     static let ImageLoaded = Notification.Name("ImageLoaded")
     static let FavouritesChanged = Notification.Name("FavouritesChanged")
+    static let RequestFailed = Notification.Name("RequestFailed")
 }

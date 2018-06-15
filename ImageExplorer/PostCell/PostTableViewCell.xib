@@ -22,13 +22,17 @@
                         <rect key="frame" x="15" y="15" width="559" height="594.5"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="BIR-Qv-afs">
-                                <rect key="frame" x="0.0" y="0.0" width="559" height="554.5"/>
+                                <rect key="frame" x="0.0" y="0.0" width="559" height="544.5"/>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="d9o-iz-OGQ">
-                                <rect key="frame" x="0.0" y="554.5" width="559" height="40"/>
+                                <rect key="frame" x="0.0" y="544.5" width="559" height="50"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CvI-zd-ru9">
-                                        <rect key="frame" x="519" y="5" width="25" height="30"/>
+                                        <rect key="frame" x="504" y="5" width="40" height="40"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="40" id="DCR-aI-5mZ"/>
+                                        </constraints>
                                         <state key="normal" image="share">
                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
@@ -37,7 +41,11 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0AB-yh-ZVf">
-                                        <rect key="frame" x="15" y="5" width="25" height="30"/>
+                                        <rect key="frame" x="15" y="5" width="40" height="40"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="40" id="mdC-Tb-Svj"/>
+                                        </constraints>
                                         <state key="normal" image="like">
                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
@@ -52,7 +60,7 @@
                                     <constraint firstAttribute="bottom" secondItem="CvI-zd-ru9" secondAttribute="bottom" constant="5" id="UKq-5p-IXn"/>
                                     <constraint firstAttribute="bottom" secondItem="0AB-yh-ZVf" secondAttribute="bottom" constant="5" id="UjH-7C-6gz"/>
                                     <constraint firstItem="0AB-yh-ZVf" firstAttribute="top" secondItem="d9o-iz-OGQ" secondAttribute="top" constant="5" id="YI5-mN-a4E"/>
-                                    <constraint firstAttribute="height" constant="40" id="rWN-e2-bfk"/>
+                                    <constraint firstAttribute="height" constant="50" id="rWN-e2-bfk"/>
                                     <constraint firstAttribute="trailing" secondItem="CvI-zd-ru9" secondAttribute="trailing" constant="15" id="utR-OA-J9F"/>
                                 </constraints>
                             </view>

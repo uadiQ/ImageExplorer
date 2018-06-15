@@ -35,6 +35,7 @@ class BrowseViewController: UIViewController {
     }
     
     private func setupTableView() {
+        tableView.delaysContentTouches = false
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(PostTableViewCell.nib, forCellReuseIdentifier: PostTableViewCell.reuseID)
@@ -44,6 +45,7 @@ class BrowseViewController: UIViewController {
     private func setObservers() {
         NotificationCenter.default.addObserver(self, selector: #selector(processFetchedRecents), name: .RecentsUpdated, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(processLoadedImage), name: .ImageLoaded, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(processFailedRequest), name: .RequestFailed, object: nil)
     }
     
     private func removeObservers() {
@@ -70,6 +72,14 @@ extension BrowseViewController {
         tableView.beginUpdates()
         tableView.endUpdates()
     }
+    
+    @objc func processFailedRequest() {
+        HUD.hide()
+        let alertMessage = UIAlertController(title: "Error", message: "New posts request failed", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alertMessage.addAction(okAction)
+        self.present(alertMessage, animated: true, completion: nil)
+    }
 }
 
 // MARK: - TableViewDelegate, TableViewDataSource
@@ -90,6 +100,7 @@ extension BrowseViewController: UITableViewDelegate, UITableViewDataSource {
         let postToPresent = recentPosts[indexPath.row]
         cell.update(with: postToPresent)
         cell.delegate = self
+        cell.favouriteAddingDelegate = self
         return cell
     }
     
@@ -104,5 +115,12 @@ extension BrowseViewController: PostSharing {
         let activityViewController = UIActivityViewController(activityItems: [urlToShare], applicationActivities: nil)
         activityViewController.popoverPresentationController?.sourceView = tableView
         self.present(activityViewController, animated: true, completion: nil)
+    }
+}
+
+extension BrowseViewController: FavouriteAdding {
+    func processAddition(of post: Post) {
+        HUD.flash(.labeledSuccess(title: "Meal added to Favorites!", subtitle: nil), delay: 0.5)
+        DataManager.instance.addToFavourites(post: post)
     }
 }

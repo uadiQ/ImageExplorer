@@ -14,6 +14,10 @@ protocol PostSharing: class {
     func share(urlToShare: URL)
 }
 
+protocol FavouriteAdding: class {
+    func processAddition(of post: Post)
+}
+
 class PostTableViewCell: UITableViewCell {
     static let reuseID = String(describing: PostTableViewCell.self)
     static let nib = UINib(nibName: String(describing: PostTableViewCell.self), bundle: nil)
@@ -24,6 +28,7 @@ class PostTableViewCell: UITableViewCell {
     
     private var post: Post!
     weak var delegate: PostSharing?
+    weak var favouriteAddingDelegate: FavouriteAdding?
     
     enum CardShadow {
         static let color = UIColor.gray.cgColor
@@ -37,6 +42,7 @@ class PostTableViewCell: UITableViewCell {
         super.awakeFromNib()
         setupShadow()
         self.selectionStyle = .none
+        
     }
     
     private func setupShadow() {
@@ -71,8 +77,9 @@ class PostTableViewCell: UITableViewCell {
     }
     
     @IBAction func likeButtonPushed(_ sender: UIButton) {
-        HUD.flash(.labeledSuccess(title: "Meal added to Favorites!", subtitle: nil), delay: 0.5)
-        DataManager.instance.addToFavourites(post: post)
+        favouriteAddingDelegate?.processAddition(of: post)
+//        HUD.flash(.labeledSuccess(title: "Meal added to Favorites!", subtitle: nil), delay: 0.5)
+//        DataManager.instance.addToFavourites(post: post)
         likeButton.isEnabled = !isFavourite(post: post)
     }
 }
